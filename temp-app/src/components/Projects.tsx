@@ -21,7 +21,15 @@ const GithubIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const projects = [
+interface Project {
+  title: string;
+  description: string;
+  tags: string[];
+  github_url: string;
+  live_url?: string;
+}
+
+const projects: Project[] = [
   {
     title: "RideFlow Management System",
     description: "A highly scalable transportation/ride backend focusing on real-time location tracking and geospatial queries.",
@@ -32,7 +40,8 @@ const projects = [
     title: "UPI Lite Payment Engine",
     description: "Architected a robust backend logic system focusing on atomic transactions and ACID compliance for money transfers.",
     tags: ["Java", "Spring Boot", "PostgreSQL", "Kafka"],
-    github_url: "https://github.com/bablu456/Upi-lite-payment-engine"
+    github_url: "https://github.com/bablu456/Upi-lite-payment-engine",
+    live_url: "https://upi-lite-payment-engine.vercel.app/login"
   },
   {
     title: "Blooms Blog Management System",
@@ -50,7 +59,8 @@ const projects = [
     title: "Movie-Zone",
     description: "A modern, responsive web application showcasing clean UI design, reusable components, and optimized performance.",
     tags: ["React", "JavaScript", "HTML", "CSS"],
-    github_url: "https://github.com/bablu456/Movie-Zone"
+    github_url: "https://github.com/bablu456/Movie-Zone",
+    live_url: "https://moviezet.netlify.app/"
   },
   {
     title: "Digital Twin AI Portfolio",
@@ -62,7 +72,8 @@ const projects = [
     title: "BiharRozgar.in AI Integration",
     description: "Implemented a sophisticated AI chatbot driven by a custom RAG system to assist users dynamically with employment opportunities.",
     tags: ["Python", "RAG", "Next.js", "LangChain"],
-    github_url: "https://github.com/bablu456/biharrozgar.in"
+    github_url: "https://github.com/bablu456/biharrozgar.in",
+    live_url: "https://biharrozgar.in"
   }
 ];
 
@@ -89,6 +100,7 @@ export function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1, duration: 0.5 }}
+              onClick={() => window.open(project.live_url || project.github_url, "_blank")}
               className="group bg-slate-900/40 border border-slate-800 rounded-2xl p-6 hover:bg-slate-800/50 hover:border-slate-600 transition-all cursor-pointer flex flex-col h-full"
             >
               <div className="flex justify-between items-start mb-6">
@@ -96,7 +108,13 @@ export function Projects() {
                   <ExternalLink className="w-5 h-5 text-slate-400 group-hover:text-blue-400" />
                 </div>
                 <div className="flex gap-2">
-                  <a href={project.github_url} target="_blank" rel="noopener noreferrer" className="p-2 text-slate-400 hover:text-white transition-colors">
+                  <a 
+                    href={project.github_url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="p-2 text-slate-400 hover:text-white transition-colors"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <GithubIcon className="w-5 h-5" />
                   </a>
                 </div>
